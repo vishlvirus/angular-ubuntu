@@ -1,17 +1,23 @@
+sudo yum clean metadata
+
 sudo yum install epel-release
+
+sudo yum install -y amazon-linux-extras
+
 yum update -y
-yum upgrade -y
-curl -sL https://rpm.nodesource.com/setup_14.x | sudo -E bash -
-sudo yum install -y nodejs
-nodejs -v
+
+
+node -v
+
 npm -v
-sudo npm install -g @angular/cli@13
-cd angular-realworld-example-app/
+
+
 npm install
+
 ng build
-sudo yum install nginx -y
-cd /var/www/html/
-sudo rm -rf index.nginx-debian.html
-cd /home/ubuntu/angular-realworld-example-app/dist
-sudo cp -r * /var/www/html
+sudo yum -y install nginx1
+cd /usr/share/nginx/html/
+sudo rm -rf index.html
+cd /home/ec2-user/angular-realworld-example-app/dist
+sudo cp -r * /usr/share/nginx/html/
 sudo service nginx restart
