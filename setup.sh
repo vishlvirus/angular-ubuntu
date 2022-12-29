@@ -1,6 +1,6 @@
 sudo yum clean metadata
 
-sudo yum install epel-release
+sudo amazon-linux-extras install epel
 
 sudo yum install -y amazon-linux-extras
 
