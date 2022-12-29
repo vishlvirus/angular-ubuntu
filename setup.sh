@@ -1,3 +1,4 @@
+sudo yum install epel-release
 yum update -y
 yum upgrade -y
 curl -sL https://rpm.nodesource.com/setup_14.x | sudo -E bash -
@@ -5,7 +6,7 @@ sudo yum install -y nodejs
 nodejs -v
 npm -v
 sudo npm install -g @angular/cli@13
-cd angular-realworld-example-app
+cd angular-realworld-example-app/
 npm install
 ng build
 sudo yum install nginx -y
