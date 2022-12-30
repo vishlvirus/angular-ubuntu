@@ -5,7 +5,7 @@ sudo apt-get install -y nodejs
 nodejs -v
 npm -v
 sudo npm install -g @angular/cli@13
-cd /angular-realworld-example-app
+cd /home/ubuntu/angular-realworld-example-app/
 npm install
 ng build
 sudo apt-get install nginx -y
