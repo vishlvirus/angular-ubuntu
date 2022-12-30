@@ -1,14 +1,15 @@
-node -v
-
+sudo apt-get update -y
+sudo apt-get upgrade -y
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt-get install -y nodejs
+nodejs -v
 npm -v
-cd /home/ec2-user/angular-realworld-example-app
-
+sudo npm install -g @angular/cli@13
+CD /angular-realworld-example-app.git
 npm install
-
 ng build
-sudo yum -y install nginx
-cd /usr/share/nginx/html/
-sudo rm -rf index.html
-cd /home/ec2-user/angular-realworld-example-app/dist
-sudo cp -r * /usr/share/nginx/html/
-sudo service nginx restart
+sudo apt-get install nginx -y
+rm -rf index.nginx-debian.html
+cd /home/ubuntu/angular-realworld-example-app/dist
+cp -r * /var/www/html
+systemctl restart nginx
