@@ -10,5 +10,5 @@ sudo apt-get install nginx -y
 cd /var/www/html/
 rm -rf index.nginx-debian.html
 cd /home/ubuntu/angular-realworld-example-app/dist
-cp -r * /var/www/html/
-systemctl restart nginx
+cp -r /home/ubuntu/angular-realworld-example-app/dist/* /var/www/html/
+sudo service restart nginx
