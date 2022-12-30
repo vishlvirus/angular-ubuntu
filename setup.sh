@@ -8,6 +8,8 @@ sudo npm install -g @angular/cli@13
 cd /home/ubuntu/angular-realworld-example-app/
 npm install
 ng build
+npm fund
+npm audit fix
 sudo apt-get install nginx -y
 cd /var/www/html/
 rm -rf index.nginx-debian.html
