@@ -6,7 +6,7 @@ npm install -g @angular/cli@13
 apt-get update && sudo apt-get install yarn -y
 cd /home/ubuntu/angular-realworld-example-app/
 npm install
-ng build -prod
+ng build
 apt-get install nginx -y
 cd /var/www/html/
 rm -rf index.nginx-debian.html
