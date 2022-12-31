@@ -3,6 +3,7 @@ sudo apt-get upgrade -y
 curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt-get install -y nodejs
 sudo npm install -g @angular/cli@13
+sudo apt-get update && sudo apt-get install yarn
 cd /home/ubuntu/angular-realworld-example-app/
 npm install
 ng build -prod
