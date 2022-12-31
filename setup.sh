@@ -12,4 +12,7 @@ cd /var/www/html/
 rm -rf index.nginx-debian.html
 cd /home/ubuntu/angular-realworld-example-app/dist
 cp -r * /var/www/html/
-sudo service restart nginx
+cd /
+systemctl restart nginx
+apt-get update -y
+apt-get upgrade -y
