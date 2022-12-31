@@ -1,4 +1,3 @@
-apt-get update -y
 apt-get upgrade -y
 curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 apt-get install -y nodejs
@@ -16,4 +15,3 @@ chmod 777 *
 cd /
 systemctl restart nginx
 apt-get update -y
-apt-get upgrade -y
