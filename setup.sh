@@ -3,8 +3,7 @@ curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh
 nano /tmp/nodesource_setup.sh
 sudo bash /tmp/nodesource_setup.sh
 sudo apt install nodejs
-node -v
-npm install -g @angular/cli@13
+npm install -g @angular/cli@latest
 apt-get update && sudo apt-get install yarn -y
 cd /home/ubuntu/angular-realworld-example-app/
 npm install
