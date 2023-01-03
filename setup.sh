@@ -1,6 +1,9 @@
 apt-get upgrade -y
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-apt-get install -y nodejs
+curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh
+nano /tmp/nodesource_setup.sh
+sudo bash /tmp/nodesource_setup.sh
+sudo apt install nodejs
+node -v
 npm install -g @angular/cli@13
 apt-get update && sudo apt-get install yarn -y
 cd /home/ubuntu/angular-realworld-example-app/
