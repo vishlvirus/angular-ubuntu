@@ -17,7 +17,7 @@ phases:
    - "docker build -t angular-repo ."
    - echo $CODEBUILD_BUILD_NUMBER
    - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
-   - "docker tag angular-repo:latest 226127612063.dkr.ecr.us-east-1.amazonaws.com/angular-repo:$CODEBUILD_BUILD_NUMBER"
+   - "docker tag angular-repo:latest 226127612063.dkr.ecr.us-east-1.amazonaws.com/angular-repo:latest"
    - ImageURI=$(cat imageDetail.json | jq -r '.ImageURI')
    - printf '[{"name":"container_name","imageUri":"image_URI"}]' > task-def-1.json
    - sed -i -e "s|CONTAINER_NAME|container-1|g" task-def-1.json
@@ -30,9 +30,9 @@ phases:
    - echo Pushing the Docker images...
    - echo $CODEBUILD_BUILD_NUMBER
    - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
-   - docker push 226127612063.dkr.ecr.us-east-1.amazonaws.com/angular-repo:$CODEBUILD_BUILD_NUMBER
+   - docker push 226127612063.dkr.ecr.us-east-1.amazonaws.com/angular-repo:latest
    - echo Writing image definitions file...
-   - printf '[{"name":"container-1","imageUri":"%s"}]' 226127612063.dkr.ecr.us-east-1.amazonaws.com/angular-repo:$CODEBUILD_BUILD_NUMBER > task-def-1.json
+   - printf '[{"name":"container-1","imageUri":"%s"}]' 226127612063.dkr.ecr.us-east-1.amazonaws.com/angular-repo:latest > task-def-1.json
    - cat task-def-1.json
    - echo Start post_build...
 
