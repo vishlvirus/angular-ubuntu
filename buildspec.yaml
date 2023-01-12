@@ -32,7 +32,7 @@ phases:
    - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
    - docker push 226127612063.dkr.ecr.us-east-1.amazonaws.com/angular-repo:latest
    - echo Writing image definitions file...
-   - printf '[{"name":"container-1","imageUri":"%s"}]' 226127612063.dkr.ecr.us-east-1.amazonaws.com/angular-repo:latest > task-def-1.json
+   - printf '[{"name":"ang-cont","imageUri":"%s"}]' 226127612063.dkr.ecr.us-east-1.amazonaws.com/angular-repo:latest > task-def-1.json
    - cat task-def-1.json
    - echo Start post_build...
 
