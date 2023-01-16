@@ -19,10 +19,10 @@ phases:
    - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
    - "docker tag vs-repo:latest 226127612063.dkr.ecr.us-east-1.amazonaws.com/vs-repo:$CODEBUILD_BUILD_NUMBER"
    - ImageURI=$(cat imageDetail.json | jq -r '.ImageURI')
-   - printf '[{"name":"container_name","imageUri":"image_URI"}]' > task-def-1.json
-   - sed -i -e "s|CONTAINER_NAME|container-1|g" task-def-1.json
-   - sed -i -e "s|IMAGE_URI|$ImageURI|g" task-def-1.json
-   - cat task-def-1.json
+   - printf '[{"name":"vs-cont","imageUri":"image_URI"}]' > imageDetail.json
+   - sed -i -e "s|CONTAINER_NAME|vs-cont|g" imageDetail.json
+   - sed -i -e "s|IMAGE_URI|$ImageURI|g" imageDetail.json
+   - cat imageDetail.json
 
  post_build:
   commands:
@@ -32,8 +32,8 @@ phases:
    - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
    - docker push 226127612063.dkr.ecr.us-east-1.amazonaws.com/vs-repo:$CODEBUILD_BUILD_NUMBER
    - echo Writing image definitions file...
-   - printf '[{"name":"container-1","imageUri":"%s"}]' 226127612063.dkr.ecr.us-east-1.amazonaws.com/vs-repo:$CODEBUILD_BUILD_NUMBER > task-def-1.json
-   - cat task-def-1.json
+   - printf '[{"name":"container-1","imageUri":"%s"}]' 226127612063.dkr.ecr.us-east-1.amazonaws.com/vs-repo:$CODEBUILD_BUILD_NUMBER > imageDetail.json
+   - cat imageDetail.json
    - echo Start post_build...
 
 version: 0.1
@@ -41,5 +41,4 @@ artifacts:
  files:
  - '**/*'
  - imageDetail.json
- - task-def-1
  discard-paths: no
