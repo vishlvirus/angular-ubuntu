@@ -14,7 +14,7 @@ phases:
   commands:
    - "echo Build started on `date`"
    - "echo Building the Docker image..."
-   - "docker build -t vs-repo ."
+   - docker build -t vs-repo .
    - echo $CODEBUILD_BUILD_NUMBER
    - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
    - "docker tag $REPOSITRY_URI:latest"
