@@ -32,7 +32,7 @@ phases:
    - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
    - docker push 226127612063.dkr.ecr.us-east-1.amazonaws.com/vs-repo:$CODEBUILD_BUILD_NUMBER
    - echo Writing image definitions file...
-   - printf '[{"name":"container-1","imageUri":"%s"}]' 226127612063.dkr.ecr.us-east-1.amazonaws.com/vs-repo:$CODEBUILD_BUILD_NUMBER > imageDetail.json
+   - printf '[{"name":"vs-cont","imageUri":"%s"}]' 226127612063.dkr.ecr.us-east-1.amazonaws.com/vs-repo:$CODEBUILD_BUILD_NUMBER > imageDetail.json
    - cat imageDetail.json
    - echo Start post_build...
 
