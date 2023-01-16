@@ -5,8 +5,8 @@ phases:
    - "echo Logging in to Docker Hub..."
    - "echo Logging in to Amazon ECR..."
    - aws --version
-   - name=myrepo
-   - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 795312482427.dkr.ecr.us-east-2.amazonaws.com
+   - name=vs-repo
+   - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 226127612063.dkr.ecr.us-east-1.amazonaws.com
    - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
    - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
 
@@ -14,10 +14,10 @@ phases:
   commands:
    - "echo Build started on `date`"
    - "echo Building the Docker image..."
-   - "docker build -t myrepo ."
+   - "docker build -t vs-repo ."
    - echo $CODEBUILD_BUILD_NUMBER
    - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
-   - "docker tag myrepo:latest 795312482427.dkr.ecr.us-east-2.amazonaws.com/myrepo:$CODEBUILD_BUILD_NUMBER"
+   - "docker tag vs-repo:latest 226127612063.dkr.ecr.us-east-1.amazonaws.com/vs-repo:$CODEBUILD_BUILD_NUMBER"
    - ImageURI=$(cat imageDetail.json | jq -r '.ImageURI')
    - printf '[{"name":"container_name","imageUri":"image_URI"}]' > task-def-1.json
    - sed -i -e "s|CONTAINER_NAME|container-1|g" task-def-1.json
@@ -30,9 +30,9 @@ phases:
    - echo Pushing the Docker images...
    - echo $CODEBUILD_BUILD_NUMBER
    - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
-   - docker push 795312482427.dkr.ecr.us-east-2.amazonaws.com/myrepo:$CODEBUILD_BUILD_NUMBER
+   - docker push 226127612063.dkr.ecr.us-east-1.amazonaws.com/vs-repo:$CODEBUILD_BUILD_NUMBER
    - echo Writing image definitions file...
-   - printf '[{"name":"container-1","imageUri":"%s"}]' 795312482427.dkr.ecr.us-east-2.amazonaws.com/myrepo:$CODEBUILD_BUILD_NUMBER > task-def-1.json
+   - printf '[{"name":"container-1","imageUri":"%s"}]' 226127612063.dkr.ecr.us-east-1.amazonaws.com/vs-repo:$CODEBUILD_BUILD_NUMBER > task-def-1.json
    - cat task-def-1.json
    - echo Start post_build...
 
