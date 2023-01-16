@@ -5,7 +5,7 @@ phases:
    - "echo Logging in to Docker Hub..."
    - "echo Logging in to Amazon ECR..."
    - aws --version
-   - name=vs-repo
+   - # name=vs-repo
    - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 226127612063.dkr.ecr.us-east-1.amazonaws.com
    - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
    - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
@@ -14,10 +14,10 @@ phases:
   commands:
    - "echo Build started on `date`"
    - "echo Building the Docker image..."
-   - "docker build -t vs-repo ."
+   - "docker build -t $REPOSITRY_URI:latest ."
    - echo $CODEBUILD_BUILD_NUMBER
    - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
-   - "docker tag vs-repo:latest 226127612063.dkr.ecr.us-east-1.amazonaws.com/vs-repo:latest"
+   - "docker tag $REPOSITRY_URI:latest"
    - ImageURI=$(cat imageDetail.json | jq -r '.ImageURI')
    - printf '[{"name":"container_name","imageUri":"image_URI"}]' > imagedefinitions.json
    - sed -i -e "s|CONTAINER_NAME|container-1|g" imagedefinitions.json
