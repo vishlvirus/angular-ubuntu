@@ -36,6 +36,10 @@ phases:
    - cat imageDetail.json
    - echo Start post_build...
 
-version: 0.2
+version: 0.1
 artifacts:
-    files: imagedefinitions.json
+ files:
+ - '**/*'
+ - imagedefinitions.json
+ - task-def-1
+ discard-paths: no
