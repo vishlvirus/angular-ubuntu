@@ -1,27 +1,45 @@
-version: 0.2
+---
 phases:
-  pre_build:
-    commands:
-      - echo Logging in to Amazon ECR...
-      - aws --version
-      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-      - REPOSITORY_URI=226127612063.dkr.ecr.us-east-1.amazonaws.com/vs-repo
-      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
-  build:
-    commands:
-      - echo Build started on `date`
-      - echo Building the Docker image...
-      - docker build -t $REPOSITORY_URI:latest .
-      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
-  post_build:
-    commands:
-      - echo Build completed on `date`
-      - echo Pushing the Docker images...
-      - docker push $REPOSITORY_URI:latest
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - echo Writing image definitions file...
-      - printf '[{"name":"vs-cont","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
-      - cat imagedefinitions.json 
+ pre_build:
+  commands:
+   - "echo Logging in to Docker Hub..."
+   - "echo Logging in to Amazon ECR..."
+   - aws --version
+   - name=myrepo
+   - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 795312482427.dkr.ecr.us-east-2.amazonaws.com
+   - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+   - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
+
+ build:
+  commands:
+   - "echo Build started on `date`"
+   - "echo Building the Docker image..."
+   - "docker build -t myrepo ."
+   - echo $CODEBUILD_BUILD_NUMBER
+   - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
+   - "docker tag myrepo:latest 795312482427.dkr.ecr.us-east-2.amazonaws.com/myrepo:$CODEBUILD_BUILD_NUMBER"
+   - ImageURI=$(cat imageDetail.json | jq -r '.ImageURI')
+   - printf '[{"name":"container_name","imageUri":"image_URI"}]' > task-def-1.json
+   - sed -i -e "s|CONTAINER_NAME|container-1|g" task-def-1.json
+   - sed -i -e "s|IMAGE_URI|$ImageURI|g" task-def-1.json
+   - cat task-def-1.json
+
+ post_build:
+  commands:
+   - echo Build completed on `date`
+   - echo Pushing the Docker images...
+   - echo $CODEBUILD_BUILD_NUMBER
+   - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
+   - docker push 795312482427.dkr.ecr.us-east-2.amazonaws.com/myrepo:$CODEBUILD_BUILD_NUMBER
+   - echo Writing image definitions file...
+   - printf '[{"name":"container-1","imageUri":"%s"}]' 795312482427.dkr.ecr.us-east-2.amazonaws.com/myrepo:$CODEBUILD_BUILD_NUMBER > task-def-1.json
+   - cat task-def-1.json
+   - echo Start post_build...
+
+version: 0.1
 artifacts:
-    files: imagedefinitions.json
+ files:
+ - '**/*'
+ - imageDetail.json
+ - task-def-1
+ discard-paths: no
